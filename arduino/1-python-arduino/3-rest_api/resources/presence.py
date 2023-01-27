@@ -3,20 +3,28 @@ from flask_restful import Resource, reqparse
 from flask_jwt_extended import jwt_required
 import sqlite3
 from models.presence import PresenceModel
+import os.path
 
 
 class Presences(Resource):
 
 
-    '''
-    DATA REQUEST SCHEMA
-    '''
-
-
     def get(self):
-        connection = sqlite3.connect('db.db')
+        connection = sqlite3.connect('./instance/banco.db')
         cursor = connection.cursor()
-        cursor.execute('SELECT * FROM presence')
+        query = cursor.execute('SELECT * FROM presence;')
+        presences = []
+        for column in query:
+            presences.append(
+                {
+                    'presence_id'           : column[0],
+                    'date_time_sent'        : column[1],
+                    'date_time_received'    : column[2],
+                    'sensor_id'             : column[3],
+                    'detection'             : column[4]
+                }
+            )
+        return presences
 
 
 class Presence(Resource):

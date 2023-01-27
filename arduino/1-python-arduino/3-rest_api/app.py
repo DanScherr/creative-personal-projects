@@ -18,10 +18,8 @@ from resources.presence import Presences
 '''
 CONFIGURE
 '''
-# from 1st import -> config for FLask application
-app = Flask(__name__)
-api = Api(app)
-# from 1st import -> config for SQL_ALCHEMY
+app = Flask(__name__) # from 1st import -> config for FLask application
+api = Api(app) # from 1st import -> config for SQL_ALCHEMY
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///banco.db' # configure the SQLite database, relative to the app instance folder
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # configurar como false tracking de modificações
 # from 1.1st import -> config for JWT
@@ -35,18 +33,16 @@ jwt = JWTManager(app)
 '''
 EVENT-DRIVEN DECORATORS
 '''
-# decorator for before first API request
 @app.before_first_request
 def create_database():
     # from 3rd import -> instanciates and creates database
     db.create_all() # before first request, database will be created
-# decorator to verify if user id is in blacklist
-@jwt.token_in_blocklist_loader
+
+@jwt.token_in_blocklist_loader # decorator to verify if user id is in blacklist
 def verifies_blocklist(self, token):
-    # from 4th import -> checks blocklist
-    return token['jti'] in BLOCKLIST
-# decorator to respond in case in blocklist
-@jwt.revoked_token_loader
+    return token['jti'] in BLOCKLIST # from 4th import -> checks blocklist
+
+@jwt.revoked_token_loader # decorator to respond in case in blocklist
 def invalid_access_token(jwt_header, jwt_payload):
     return jsonify({"message": "You have been logged out."}), 401 # unauthorized
 
