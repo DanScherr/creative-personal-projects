@@ -8,8 +8,11 @@ from flask_restful import Api
 from env_vars import jwt_secret_key, jwt_algorithm
 # 2 import
 from flask_jwt_extended import JWTManager
-#4 import
+# 4 import
 from blocklist import BLOCKLIST
+# 5 import
+from resources.presence import Presence
+from resources.presence import Presences
 
 
 '''
@@ -51,8 +54,8 @@ def invalid_access_token(jwt_header, jwt_payload):
 '''
 ADDING RESOURCES
 '''
-
-
+api.add_resource(Presences, '/presences')
+api.add_resource(Presence, '/presence')
 
 '''
 MAIN CONTEXT
@@ -60,4 +63,5 @@ MAIN CONTEXT
 if __name__ == '__main__':
     # 3 import
     from sql_alchemy import db
+    db.init_app(app)
     app.run(debug=True)

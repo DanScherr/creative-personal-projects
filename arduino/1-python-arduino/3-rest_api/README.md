@@ -47,12 +47,46 @@
     - gotta make some configurations relativelly to the app instance folder on [app.py](./app.py).
         - ## .env file:
             - to make the JWT password and type of encriptying safer, we will create a .env file to load the environmental variables.
-            - create a [env_vars.py](./env_vars.py) side file (for organization purpose) to work with the .env file and create the variables that will be imported in [app.py](./app.py).
+            - create a [env_vars.py](./env_vars.py) side file (for organization purpose) to work with the .env file and create the variables that will be imported in [app.py](./app.py) for the configuration of the JWT.
 
     - ## BLOCKLIST:
         - create a side file [blocklist.py](./blocklist.py) to create an unordered collection with no duplicate elements to validate user id login with [set()](https://docs.python.org/3/tutorial/datastructures.html) function.
 
     - create an event-driven decorator on [app.py](./app.py) so that the app verifies token in blocklist.
+
+- # Model:
+
+
+- # ADD Resources:
+    - Add resources structure in [app.py](./app.py) following the business rules mapped.
+    - ## POSTMAN (optional):
+        - Configure Headers:
+
+            ![postman header configuration](./../images/post-man-json-config.png)
+
+        - Create requests for the resources to test them:
+
+            ![](./../images/postman-post-request-sucessfull.png)
+
+        - View in the database created the new table and post:
+
+            ![](./../images/sqlite-first-sucess-post.png)
+        
+
+- # Models:
+    - Located in [./models/](./models/)
+    - For each resource, create a file .py
+        - In each file, build Classes with its atributes and methods of the entity resource of the api.
+    1. Create Class (POO).
+    2. Create the table schema to be added to the database object (must import it at the beginning of the file).
+    3. Create the Class constructor together with its methods that are going to interact with the database e give back its metadata.
+
+- # Resources:
+    - Located in [./resources/](./resources/)
+    - For each resource create a file.
+        - In each file, build Classes with its atributes and methods (get, put, post, delete).
+    - Every file and its respectives classes must be imported on [app.py](./app.py) and added into the api object resource.
+
 
 
 
