@@ -11,7 +11,7 @@ class PresenceModel(db.Model):
     presence_id         = db.Column(db.String(31), primary_key=True) 
     date_time_sent      = db.Column(db.String(26), nullable=False) # data-time of postted data
     date_time_received  = db.Column(db.String(26)) # data-time of received data
-    sensor_id           = db.Column(db.String(5)) # a foreign key references in its parameters, table_title.column
+    sensor_id           = db.Column(db.String(5), db.ForeignKey('sensor.sensor_id')) # a foreign key references in its parameters, table_title.column
     detection           = db.Column(db.Integer)
     
     '''

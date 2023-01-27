@@ -6,16 +6,17 @@ class SensorModel(db.Model):
     '''
     TABLE SCHEMA
     '''
-    __tablename__       = 'sensors'
-    sensor_id           = db.Column(db.Integer, primary_key=True)
+    __tablename__       = 'sensor'
+    sensor_id           = db.Column(db.String, primary_key=True)
     sensor_name         = db.Column(db.String, nullable=False) # {sensor} {model/type} {What it does} {n*}
-    sensor_password     = db.Column(db.String, nullable=False)
+
 
     '''
     CONSTRUCTOR
     '''
-    def __init__(self) -> None:
-        self.sensor_id = set
+    def __init__(self, sensor_id, sensor_name) -> None:
+        self.sensor_id      = sensor_id
+        self.sensor_name    = sensor_name
 
     
     '''
@@ -36,9 +37,16 @@ class SensorModel(db.Model):
         else:
             return None
 
+
     '''
     WITHIN OBJECT ESPECIFIC ESCOPE AND ACCESSABILITY
     '''
+    def json(self): # convert dict to json
+        return {
+            'sensor_id'     : self.sensor_id,
+            'sensor_name'   : self.sensor_name
+        }
+    
     def save_sensor(self):
         db.session.add(self)
         db.session.commit()

@@ -13,6 +13,8 @@ from blocklist import BLOCKLIST
 # 5 import
 from resources.presence import Presence
 from resources.presence import Presences
+from resources.sensor import Sensor
+from resources.sensor import SensorRegister
 
 
 '''
@@ -22,12 +24,10 @@ app = Flask(__name__) # from 1st import -> config for FLask application
 api = Api(app) # from 1st import -> config for SQL_ALCHEMY
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///banco.db' # configure the SQLite database, relative to the app instance folder
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # configurar como false tracking de modificações
-# from 1.1st import -> config for JWT
 app.config['JWT_SECRET_KEY'] = jwt_secret_key # configurando chave do lado da aplicação
-app.config['JWT_ALGORITHM'] = jwt_algorithm # configuring app to have HS256 as the algorithym password
+app.config['JWT_ALGORITHM'] = jwt_algorithm # from 1.1st import -> config for JWT # configuring app to have HS256 as the algorithym password
 app.config['JWT_BLACKLIST_ENABLED'] = True # enabling the blocklist to validate the users
-# from 2nd import -> instancying jwt manager
-jwt = JWTManager(app)
+jwt = JWTManager(app) # from 2nd import -> instancying jwt manager
 
 
 '''
@@ -52,6 +52,9 @@ ADDING RESOURCES
 '''
 api.add_resource(Presences, '/presences')
 api.add_resource(Presence, '/presence')
+api.add_resource(Sensor, '/sensor/<string:sensor_id>')
+api.add_resource(SensorRegister, '/sensor_register')
+
 
 '''
 MAIN CONTEXT
