@@ -1,5 +1,6 @@
 from sql_alchemy import db
 from datetime import datetime
+from lib.easy_date import easy_datetime
 
 
 class PresenceModel(db.Model):
@@ -13,17 +14,29 @@ class PresenceModel(db.Model):
     date_time_received  = db.Column(db.String(26)) # data-time of received data
     sensor_id           = db.Column(db.String(5), db.ForeignKey('sensor.sensor_id')) # a foreign key references in its parameters, table_title.column
     detection           = db.Column(db.Integer)
+    """ year                = db.Column(db.Integer)
+    month               = db.Column(db.Integer)
+    day                 = db.Column(db.Integer)
+    hour                = db.Column(db.Integer)
+    minute              = db.Column(db.Integer)
+    second              = db.Column(db.Integer) """
     
     '''
     CONSTRUCTOR
     '''
-    def __init__(self, date_time_sent, sensor_id, detection) -> None:
+    def __init__(self, date_time_sent, sensor_id, detection, year, month, day, hour, minute, second) -> None:
         self.date_time_received = self.set_date_time_received()
         self.presence_id        = self.set_presence_id(sensor_id)
         self.date_time_sent     = self.set_date_time_sent(date_time_sent)
         self.sensor_id          = self.set_sensor_id(sensor_id)
         self.detection          = self.set_detection(detection)
-
+        # setado automaticamente
+        """ self.year               = easy_datetime(year)
+        self.month              = easy_datetime(month)
+        self.day                = easy_datetime(day)
+        self.hour               = easy_datetime(hour)
+        self.minute             = easy_datetime(minute)
+        self.second             = easy_datetime(second) """
 
     '''
     SETTERs
@@ -79,7 +92,6 @@ class PresenceModel(db.Model):
         else:
             return False
 
-
     '''
     WITHIN CLASS UNIVERSAL ESCOPE AND ACCESSABILITY
     '''
@@ -103,6 +115,9 @@ class PresenceModel(db.Model):
             'detection'             : self.detection
         }
     
+    '''
+    WITHIN DATA BASE CONTEXT
+    '''
     def save_presence(self) -> None: # saving object instance, each object is a line
         db.session.add(self)
         db.session.commit()

@@ -5,7 +5,7 @@ IMPORT
 from flask import Flask, jsonify
 from flask_restful import Api
 # 1.1 import
-from env_vars import jwt_secret_key, jwt_algorithm
+#from env_vars import jwt_secret_key, jwt_algorithm
 # 2 import
 from flask_jwt_extended import JWTManager
 # 4 import
@@ -22,11 +22,11 @@ CONFIGURE
 '''
 app = Flask(__name__) # from 1st import -> config for FLask application
 api = Api(app) # from 1st import -> config for SQL_ALCHEMY
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///banco.db' # configure the SQLite database, relative to the app instance folder
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db' # configure the SQLite database, relative to the app instance folder
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # configurar como false tracking de modificações
-app.config['JWT_SECRET_KEY'] = jwt_secret_key # configurando chave do lado da aplicação
-app.config['JWT_ALGORITHM'] = jwt_algorithm # from 1.1st import -> config for JWT # configuring app to have HS256 as the algorithym password
-app.config['JWT_BLACKLIST_ENABLED'] = True # enabling the blocklist to validate the users
+#app.config['JWT_SECRET_KEY'] = jwt_secret_key # configurando chave do lado da aplicação
+#app.config['JWT_ALGORITHM'] = jwt_algorithm # from 1.1st import -> config for JWT # configuring app to have HS256 as the algorithym password
+#app.config['JWT_BLACKLIST_ENABLED'] = True # enabling the blocklist to validate the users
 jwt = JWTManager(app) # from 2nd import -> instancying jwt manager
 
 
