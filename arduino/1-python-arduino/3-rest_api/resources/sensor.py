@@ -13,10 +13,29 @@ atributes = reqparse.RequestParser()
 atributes.add_argument('sensor_id', type=str, required=True, help="Got to add id.")
 atributes.add_argument('sensor_name', type=str, required=True, help="Got to add name.")
 
-class Sensor(Resource):
+class Sensors(Resource):
 
 
     # criar put
+
+    def get(self):
+        connection = sqlite3.connect('./instance/database.db')
+        cursor = connection.cursor()
+        query = cursor.execute('SELECT * FROM sensor;')
+        sensors = []
+        
+        for column in query:
+            sensors.append(
+                {
+                    'sensor_id'     : column[0],
+                    'sensor_name'   : column[1]
+                }
+            )
+
+        return sensors
+
+
+class Sensor(Resource):
 
     def delete(self, sensor_id):
         found_sensor = SensorModel.find_sensor(sensor_id)
@@ -29,6 +48,7 @@ class Sensor(Resource):
 
         return {'message': 'User not found'}, 404
     
+
 class SensorRegister(Resource):
 
 

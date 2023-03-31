@@ -24,7 +24,7 @@ class PresenceModel(db.Model):
     '''
     CONSTRUCTOR
     '''
-    def __init__(self, date_time_sent, sensor_id, detection, year, month, day, hour, minute, second) -> None:
+    def __init__(self, date_time_sent, sensor_id, detection) -> None:
         self.date_time_received = self.set_date_time_received()
         self.presence_id        = self.set_presence_id(sensor_id)
         self.date_time_sent     = self.set_date_time_sent(date_time_sent)

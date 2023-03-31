@@ -1,6 +1,6 @@
 '''
 IMPORT
-'''
+''' 
 # 1 import.
 from flask import Flask, jsonify
 from flask_restful import Api
@@ -13,6 +13,7 @@ from blocklist import BLOCKLIST
 # 5 import
 from resources.presence import Presence
 from resources.presence import Presences
+from resources.sensor import Sensors
 from resources.sensor import Sensor
 from resources.sensor import SensorRegister
 
@@ -52,6 +53,7 @@ ADDING RESOURCES
 '''
 api.add_resource(Presences, '/presences')
 api.add_resource(Presence, '/presence')
+api.add_resource(Sensors, '/sensors')
 api.add_resource(Sensor, '/sensor/<string:sensor_id>')
 api.add_resource(SensorRegister, '/sensor_register')
 
